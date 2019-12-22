@@ -21,7 +21,7 @@ void Graph::Dijkstra(Graph G)
 {
 	int Node = 0;        //源点最近的点
 	int NextJump = 0;    //记录下一跳
-	int* Father = new int[G.number]; //父结点数组
+	int* Father = new int[G.number];   //父结点数组
 	int NowMinDis = maxDistence;       //源点最近距离
 	int* Dis = new int[G.number];      //A到其它结点的最短距离
 	int* Visited = new int[G.number];  //已访问的结点
@@ -60,7 +60,7 @@ L1:
 	int Circulation = G.number - 1;        //循环次数
 	while (Circulation)
 	{
-		NowMinDis = maxDistence;       //源点最近距离
+		NowMinDis = maxDistence;           //源点最近距离
 		//寻找距离点A最近的结点
 		for (int i = 0; i < G.number; i++)
 		{
@@ -98,7 +98,7 @@ L1:
 			if (G.hold[Node].edge[i] < maxDistence)
 			{
 				//A->i 大于  A->Node->i
-				if (Dis[i] > Dis[Node] + G.hold[Node].edge[i] && Visited[i] == -1)
+				if (Dis[i] > Dis[Node] + G.hold[Node].edge[i] && Visited[i] == -1 && G.hold[Node].edge[i] != 0)
 				{
 					Father[i] = Node;
 					Dis[i] = Dis[Node] + G.hold[Node].edge[i];
@@ -123,7 +123,7 @@ L1:
 			//得到路由器的下一跳并存储
 			NextJump = Find(i, TransFormID - 1, Father) + 1;
 			G.hold[TransFormID - 1].nextJump[i] = NextJump;
-			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i+1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
+			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
 			cout << "---------------------------------------------" << endl;
 		}
 		//如果目的网络与路由器不相连
@@ -132,7 +132,7 @@ L1:
 			//得到路由器的下一跳并存储
 			NextJump = Find(i, TransFormID - 1, Father) + 1;
 			G.hold[TransFormID - 1].nextJump[i] = NextJump;
-			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i+1 << ".x.x.x" << "     |    路由器" << NextJump << "  |" << endl;
+			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << NextJump << "  |" << endl;
 			cout << "---------------------------------------------" << endl;
 		}
 	}
