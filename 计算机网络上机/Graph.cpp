@@ -112,16 +112,24 @@ void Graph::AddPoint()
 				int heavy = 0;
 				int a = 1;//临时的变量,保存被连接的路由器编号
 				int n = 0;
-				cout << "请输入这个编号为" << number << "的路由器和哪个路由器相连,输入0结束" << endl;
+				cout << "请输入这个编号为" << aNew.ID << "的路由器和哪个路由器相连,输入0结束" << endl;
 				cin >> n;
-				a = idToMatrix[n - 1];
-				if (a == 0)
+				if (n == 0)
 				{
 					break;
+				}
+				a = idToMatrix[n - 1];
+				if (a < 0)
+				{
+					cout << "不存在这个结点" << endl;
 				}
 				else if (matrix[a][0] == -1)
 				{
 					cout << "不存在对应的结点" << endl;
+				}
+				else if (aNew.ID == n)
+				{
+					cout << "不能自己连接自己" << endl;
 				}
 				else
 				{
