@@ -6,6 +6,7 @@ using namespace std;
 //Dijkstra算法
 void Graph::Dijkstra(Graph G)
 {
+	cout << G.matrix[6][7] << endl;
 	int Node = 0;        //源点最近的点
 	int PreNode = -1;    //上一个结点
 	int NowMinDis = maxDistence;      //源点最近距离
@@ -21,7 +22,7 @@ L1:
 	cin >> RouterID;
 	//将路由器ID转换为正确的ID
 	TransFormID = G.idToMatrix[RouterID];
-	//加入该ID不存在内容
+	//假入该ID不存在内容
 	if (TransFormID < 0)
 	{
 		cout << "该路由器不存在！请重新输入！" << endl;
@@ -80,7 +81,6 @@ L1:
 		PreNode = Node;
 		*/
 
-
 		for (int i = 0; i < G.number; i++)
 		{
 			//源点所得最近点可达的结点
@@ -106,8 +106,8 @@ L1:
 	//把下一跳存储并输出
 	for (int i = 0; i < G.number; i++)
 	{
-		G.hold[TransFormID].nextJump[i] = Road[i][0];
-		cout << "|  路由器" << G.hold[TransFormID].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << Road[i][0] << "  |" << endl;
+		G.hold[TransFormID].nextJump[i] = Road[i][0] + 1;
+		cout << "|  路由器" << G.hold[TransFormID].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << Road[i][0] + 1 << "  |" << endl;
 		cout << "---------------------------------------------" << endl;
 	}
 }
