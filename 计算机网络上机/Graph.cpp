@@ -40,6 +40,7 @@ void Graph::WriteFile()
 		{
 			if (matrix[i][j] != 0 && matrix[i][j] != maxDistence)
 			{
+				//利用矩阵的标号找到对应的路由器编号
 				for (int ax = 0; ax < 30; ax++)
 				{
 					if (idToMatrix[ax] == i)
