@@ -191,14 +191,17 @@ void Graph::SetNode()
 {
 	int head = 0;
 	int tail = 0;
-	for (int i = 0; i < number; i++)
+	for (int i = 0; i < 30; i++)
 	{
-		hold[i].ID = i + 1;
-		for (int j = 0; j < number; j++)
+		for (int j = 0; j < 30; j++)
 		{
 			head = idToMatrix[i];
 			tail = idToMatrix[j];
-			hold[i].edge[j] = matrix[head][tail];
+			if (head >= 0 && tail >= 0)
+			{
+				hold[i].ID = i + 1;
+				hold[i].edge[j] = matrix[head][tail];
+			}
 		}
 	}
 }
