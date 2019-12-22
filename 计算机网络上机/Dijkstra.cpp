@@ -4,16 +4,29 @@
 using namespace std;
 
 //Dijkstra算法
-void Graph::Dijkstra(Graph G, Node& N)
+void Graph::Dijkstra(Graph G)
 {
-	int Node = 0;                   //源点最近的点
-	int PreNode = -1;               //上一个结点
-	int Count = 0;                  //用于计数++
-	int NowMinDis = maxDistence;    //源点最近距离
+	int Node = 0;        //源点最近的点
+	int PreNode = -1;    //上一个结点
+	int NowMinDis = maxDistence;      //源点最近距离
+	int* Dis = new int[G.number];     //A到其它结点的最短距离
+	int* Visited = new int[G.number]; //已访问的结点
+	int** Road = new int* [G.number]; //路径
 
-	int* Dis = new int[G.number];       //A到其它结点的最短距离
-	int* Visited = new int[G.number];   //已访问的结点
-	int** Road = new int* [G.number];   //路径
+	int RouterID = 0;    //路由器ID
+	int TransFormID = 0; //转换ID
+	cout << "请输入你想从哪个路由器开始：" << endl;
+L1:
+	cout << flush;
+	cin >> RouterID;
+	//将路由器ID转换为正确的ID
+	TransFormID = G.idToMatrix[RouterID];
+	//加入该ID不存在内容
+	if (TransFormID < 0)
+	{
+		cout << "该路由器不存在！请重新输入！" << endl;
+		goto L1;
+	}
 
 	//初始化
 	for (int i = 0; i < G.number; i++)
@@ -30,19 +43,19 @@ void Graph::Dijkstra(Graph G, Node& N)
 		}
 	}
 
-	Visited[N.ID] = 1;                 //表明A已访问
+	Visited[TransFormID] = 1;          //表明A已访问
 	int Circulation = G.number - 1;    //循环次数
 	while (Circulation)
 	{
-		NowMinDis = maxDistence;        //源点最近距离
+		NowMinDis = maxDistence;       //源点最近距离
 		//寻找距离点A最近的结点
 		for (int i = 0; i < G.number; i++)
 		{
 			//点A到其它结点的距离小于MAX 且 小于当前最短距离（NowMinDis）且 未被访问
-			if (N.edge[i] < maxDistence && N.edge[i] < NowMinDis && Visited[i] == -1)
+			if (G.hold[TransFormID].edge[i] < maxDistence && G.hold[TransFormID].edge[i] < NowMinDis && Visited[i] == -1)
 			{
 				//更改最短路径的距离
-				NowMinDis = N.edge[i];
+				NowMinDis = G.hold[TransFormID].edge[i];
 				//距离最短的结点
 				Node = i;
 			}
@@ -84,7 +97,7 @@ void Graph::Dijkstra(Graph G, Node& N)
 		Circulation--;
 	}
 	//给Nxet分配内存
-	N.nextJump = new int[G.number];
+	G.hold[TransFormID].nextJump = new int[G.number];
 
 	//         路由器名称     目的网络         下一跳
 	cout << "--------------------------------------------" << endl;
@@ -93,9 +106,8 @@ void Graph::Dijkstra(Graph G, Node& N)
 	//把下一跳存储并输出
 	for (int i = 0; i < G.number; i++)
 	{
-		N.nextJump[i] = Road[i][0];
-		cout << "|   路由器" << N.ID << "  |    " << i << ".x.x.x" << "     |   路由器" << Road[i][0] << "  |" << endl;
+		G.hold[TransFormID].nextJump[i] = Road[i][0];
+		cout << "|   路由器" << G.hold[TransFormID].ID << "  |    " << i << ".x.x.x" << "     |   路由器" << Road[i][0] << "  |" << endl;
 		cout << "--------------------------------------------" << endl;
 	}
-
 }
