@@ -187,7 +187,7 @@ void Graph::AddEdge()
 	WriteFile();
 }
 
-/*void Graph::SetNode()
+void Graph::SetNode()
 {
 	int head = 0;
 	int tail = 0;
@@ -201,7 +201,7 @@ void Graph::AddEdge()
 			hold[i].edge[j] = matrix[head][tail];
 		}
 	}
-}*/
+}
 
 void Graph::DeleteEdge()
 {
