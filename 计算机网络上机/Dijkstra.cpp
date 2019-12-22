@@ -32,7 +32,7 @@ L1:
 	for (int i = 0; i < G.number; i++)
 	{
 		//A（源点）到其它结点的距离
-		Dis[i] = N.edge[i];
+		Dis[i] = G.hold[TransFormID].edge[i];
 		//所有结点均未访问（-1）
 		Visited[i] = -1;
 		//每个点的路径为-1
