@@ -40,9 +40,6 @@ int main()
 	}
 	case 5:
 	{
-		int id1 = 0;
-		cout << "请输入需要输出路由表的路由器的id" << endl;
-		cin >> id1;
 		net.Dijkstra(net);
 		break;
 	}

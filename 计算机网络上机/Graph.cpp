@@ -17,6 +17,7 @@ Graph::Graph()
 			matrix[i][j] = -1;
 		}
 	}
+	//matrix;
 	hold = new Node[maxNumber];
 	idToMatrix = new int [maxNumber];
 	for (int i = 0; i < maxNumber; i++)
@@ -80,7 +81,7 @@ void Graph::ReadFile()
 	}
 	file.close();
 	//再将邻接矩阵中的内容写入各个结点中
-	//SetNode();
+	SetNode();
 }
 
 void Graph::AddPoint()
@@ -145,7 +146,7 @@ void Graph::AddPoint()
 		}
 	}
 	//再将各个路由器中的信息通过邻接矩阵存入内存
-	//SetNode();
+	SetNode();
 	WriteFile();
 }
 
@@ -183,7 +184,7 @@ void Graph::AddEdge()
 		if (judge == 'n' || judge == 'N')
 			break;
 	}
-	//SetNode();
+	SetNode();
 	WriteFile();
 }
 
@@ -240,7 +241,7 @@ void Graph::DeleteEdge()
 		if (judge == 'n' || judge == 'N')
 			break;
 	}
-	//SetNode();
+	SetNode();
 	WriteFile();
 }
 
@@ -297,7 +298,7 @@ void Graph::DeletePoint()
 		}
 
 	}
-	//SetNode();
+	SetNode();
 	WriteFile();
 }
 

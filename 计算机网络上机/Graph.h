@@ -12,6 +12,7 @@ public:
 	void ReadFile();//将文件中的信息存入内存中
 	void SetNode();//利用邻接矩阵写各个路由器的值
 	void Dijkstra(Graph G);//Dijkstra函数
+	//Node PutNode(int i);
 
 private:
 	int number;//网络中路由器的个数
