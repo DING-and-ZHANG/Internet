@@ -83,9 +83,19 @@ void Graph::Dijkstra(Graph G, Node& N)
 		}
 		Circulation--;
 	}
+	//给Nxet分配内存
 	N.nextJump = new int[G.number];
+
+	//         路由器名称     目的网络         下一跳
+	cout << "--------------------------------------------" << endl;
+	cout << "|  RouterID  |  ObjectiveNet  |  NextJump  |" << endl;
+	cout << "--------------------------------------------" << endl;
+	//把下一跳存储并输出
 	for (int i = 0; i < G.number; i++)
 	{
 		N.nextJump[i] = Road[i][0];
+		cout << "|   路由器" << N.ID << "  |    " << i << ".x.x.x" << "     |   路由器" << Road[i][0] << "  |" << endl;
+		cout << "--------------------------------------------" << endl;
 	}
+
 }
