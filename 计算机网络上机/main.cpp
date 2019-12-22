@@ -37,13 +37,11 @@ int main()
 		net.DeleteEdge();
 		break;
 	}
-
 	case 5:
 	{
 
 		break;
 	}
-
 	default:
 	{
 		cout << "请输入1-5之间的数" << endl;

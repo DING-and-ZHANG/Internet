@@ -18,7 +18,11 @@ Graph::Graph()
 		}
 	}
 	hold = new Node[maxNumber];
-
+	idToMatrix = new int [maxNumber];
+	for (int i = 0; i < maxNumber; i++)
+	{
+		idToMatrix[i] = -1;
+	}
 }
 
 //将内存中的邻接矩阵信息写入文件中
@@ -56,6 +60,8 @@ void Graph::ReadFile()
 		matrix[head - 1][tail - 1] = heavy;
 		matrix[tail - 1][head - 1] = heavy;
 		//将无法达到的置为最大距离
+		idToMatrix[head - 1] = head - 1;
+		idToMatrix[tail - 1] = tail - 1;
 		for (int i = 0; i < number; i++)
 		{
 			if (matrix[head - 1][i] == -1)
@@ -83,55 +89,59 @@ void Graph::AddPoint()
 	while (1)
 	{
 		Node aNew;//一个新路由器
-		number++;
-		/*aNew.ID = number;
-		aNew.edge = new int[number];
-		//新结点到各个节点的距离先设置为max
-		for (int i = 0; i < number; i++)
+		cout << "请输入该路由器编号" << endl;
+		cin >> aNew.ID;
+		if (idToMatrix[aNew.ID - 1] >= 0)
 		{
-			aNew.edge[i] = maxDistence;
+			cout << "已经存在该路由器" << endl;
 		}
-		aNew.edge[number - 1] = 0;//自己到自己的权重为0；*/
-		//更新邻接矩阵
-		for (int i = 0; i < number - 1; i++)
+		else
 		{
-			matrix[i][number - 1] = maxDistence;
-			matrix[number - 1][i] = maxDistence;
-		}
-		while (1)
-		{
-			//循环加边
-			int heavy = 0;
-			int a = 1;//临时的变量,保存被连接的路由器编号
-			cout << "请输入这个编号为" << number << "的路由器和哪个路由器相连,输入0结束" << endl;
-			cin >> a;
-			if (a == 0)
+			number++;
+			//更新邻接矩阵
+			for (int i = 0; i < number - 1; i++)
+			{
+				matrix[i][number - 1] = maxDistence;
+				matrix[number - 1][i] = maxDistence;
+			}
+			idToMatrix[aNew.ID - 1] = number - 1;
+			while (1)
+			{
+				//循环加边
+				int heavy = 0;
+				int a = 1;//临时的变量,保存被连接的路由器编号
+				int n = 0;
+				cout << "请输入这个编号为" << number << "的路由器和哪个路由器相连,输入0结束" << endl;
+				cin >> n;
+				a = idToMatrix[n - 1];
+				if (a == 0)
+				{
+					break;
+				}
+				else if (matrix[a][0] == -1)
+				{
+					cout << "不存在对应的结点" << endl;
+				}
+				else
+				{
+					cout << "请输入这个新路由器到该相邻节点的权重" << endl;
+					cin >> heavy;
+					//同时也要给相应的被连接的路由器加边
+					//更新邻接矩阵
+					matrix[number - 1][number - 1] = 0;
+					matrix[number - 1][a] = heavy;
+					matrix[a][number - 1] = heavy;
+					cout << "添加完成" << endl;
+				}
+			}
+			//更新存放所有路由器的数组		
+			char judge;
+			cout << "是否需要继续添加新的路由器(输入y继续)" << endl;
+			cin >> judge;
+			if (judge != 'y' && judge != 'Y')
 			{
 				break;
 			}
-			else if (matrix[a - 1][0] == -1)
-			{
-				cout << "不存在对应的结点" << endl;
-			}
-			else
-			{
-				cout << "请输入这个新路由器到该相邻节点的权重" << endl;
-				cin >> heavy;
-				//同时也要给相应的被连接的路由器加边
-				//更新邻接矩阵
-				matrix[number - 1][number - 1] = 0;
-				matrix[number - 1][a - 1] = heavy;
-				matrix[a - 1][number - 1] = heavy;
-				cout << "添加完成" << endl;
-			}
-		}
-		//更新存放所有路由器的数组		
-		char judge;
-		cout << "是否需要继续添加新的路由器(输入y继续)" << endl;
-		cin >> judge;
-		if (judge != 'y' && judge != 'Y')
-		{
-			break;
 		}
 	}
 	//再将各个路由器中的信息通过邻接矩阵存入内存
@@ -143,22 +153,28 @@ void Graph::AddEdge()
 {
 	while (1)
 	{
+		int ahead = 0;
+		int atail = 0;
 		int head = 0;
 		int tail = 0;
 		int heavy = 0;
 		cout << "请输入需要增加的边其中一头的路由器编号" << endl;
-		cin >> head;
+		cin >> ahead;
 		cout << "请输入需要增加的边另一头的路由器编号" << endl;
-		cin >> tail;
+		cin >> atail;
 		cout << "请输入需要增加的边的权重" << endl;
 		cin >> heavy;
-		if (head == tail)
+		head=idToMatrix[ahead - 1];
+		tail = idToMatrix[atail - 1];
+		if (head < 0 || tail < 0)
+				cout << "不存在输入的路由器" << endl;
+		else if (head == tail)
 			cout << "不能自己将自己连起来" << endl;
-		else if (matrix[head - 1][tail - 1] != maxDistence)
+		else if (matrix[head][tail] != maxDistence)
 			cout << "该边已经存在" << endl;
 		else
 		{
-			matrix[head - 1][tail - 1] = heavy;
+			matrix[head][tail] = heavy;
 			cout << "添加完成" << endl;
 		}
 		char judge;
@@ -173,12 +189,16 @@ void Graph::AddEdge()
 
 void Graph::SetNode()
 {
+	int head = 0;
+	int tail = 0;
 	for (int i = 0; i < number; i++)
 	{
 		hold[i].ID = i + 1;
 		for (int j = 0; j < number; j++)
 		{
-			hold[i].edge[j] = matrix[i][j];
+			head = idToMatrix[i];
+			tail = idToMatrix[j];
+			hold[i].edge[j] = matrix[head][tail];
 		}
 	}
 }
@@ -187,22 +207,28 @@ void Graph::DeleteEdge()
 {
 	while (1)
 	{
+		int ahead = 0;
+		int atail = 0;
 		int head = 0;
 		int tail = 0;
 		int heavy = 0;
 		cout << "请输入需要删除的边其中一头的路由器编号" << endl;
-		cin >> head;
+		cin >> ahead;
 		cout << "请输入需要删除的边另一头的路由器编号" << endl;
-		cin >> tail;
+		cin >> atail;
 		cout << "请输入需要删除的边的权重" << endl;
 		cin >> heavy;
-		if (head == tail)
+		head = idToMatrix[ahead - 1];
+		tail = idToMatrix[tail - 1];
+		if (head < 0 || tail < 0)
+			cout << "不存在输入的路由器" << endl;
+		else if (head == tail)
 			cout << "自己与自己之间不需要路径" << endl;
-		else if (matrix[head - 1][tail - 1] == maxDistence)
+		else if (matrix[head][tail] == maxDistence)
 			cout << "该边不存在" << endl;
 		else
 		{
-			matrix[head - 1][tail - 1] = maxDistence;
+			matrix[head][tail] = maxDistence;
 			cout << "删除完成" << endl;
 		}
 		char judge;
@@ -219,25 +245,27 @@ void Graph::DeletePoint()
 {
 	while (1)
 	{
+		int deleteNumber = 0;
 		int num = 0;
 		cout << "请输入需要删除的路由器编号,删除后该路由器编号之后的路由器编号将依次提前一位" << endl;
 		cin >> num;
 		//开始调整矩阵(先直接调整下邻接矩阵)
 		//先将每一列大于num的依次上调一位
+		deleteNumber= idToMatrix[num - 1];
 		if (matrix[num - 1][0] == -1)
 		{
 			cout << "无该路由器，请输入正确的编号" << endl;
 		}
 		else
 		{
-			for (int i = num - 1; i < number; i++)
-				for (int j = num - 1; j < i; j++)
+			for (int i = deleteNumber; i < number; i++)
+				for (int j = deleteNumber; j < i; j++)
 				{
 					matrix[i][j] = matrix[i][j + 1];
 				}
 			//再将每一行大于num的依次向左挪一位
 			for (int j = 0; j < number; j++)
-				for (int i = num - 1; i < number; i++)
+				for (int i = deleteNumber; i < number; i++)
 				{
 					matrix[i][j] = matrix[i + 1][j];
 				}
@@ -247,6 +275,14 @@ void Graph::DeletePoint()
 				{
 					matrix[j][i] = matrix[i][j];
 				}
+			//修改对应表
+			for (int i = 0; i < 30; i++)
+			{
+				if(idToMatrix[i]> idToMatrix[num - 1])
+				idToMatrix[i]--;
+			}
+			idToMatrix[num - 1] = -1;
+			number--;
 			cout << "删除完成" << endl;
 		}
 		cout << "是否需要继续删除结点,输入n结束" << endl;
