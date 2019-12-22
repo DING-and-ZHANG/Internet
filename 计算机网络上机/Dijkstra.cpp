@@ -15,7 +15,7 @@ void Graph::Dijkstra(Graph G)
 
 	int RouterID = 0;    //路由器ID
 	int TransFormID = 0; //转换ID
-	cout << "请输入你想从哪个路由器开始：" << endl;
+	cout << "请输入你想从哪个路由器(ID)开始：" << endl;
 L1:
 	cout << flush;
 	cin >> RouterID;
@@ -100,14 +100,14 @@ L1:
 	G.hold[TransFormID].nextJump = new int[G.number];
 
 	//         路由器名称     目的网络         下一跳
-	cout << "--------------------------------------------" << endl;
-	cout << "|  RouterID  |  ObjectiveNet  |  NextJump  |" << endl;
-	cout << "--------------------------------------------" << endl;
+	cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+	cout << "|  RouterID  |  ObjectiveNet  |   NextJump  |" << endl;
+	cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
 	//把下一跳存储并输出
 	for (int i = 0; i < G.number; i++)
 	{
 		G.hold[TransFormID].nextJump[i] = Road[i][0];
-		cout << "|   路由器" << G.hold[TransFormID].ID << "  |    " << i << ".x.x.x" << "     |   路由器" << Road[i][0] << "  |" << endl;
-		cout << "--------------------------------------------" << endl;
+		cout << "|  路由器" << G.hold[TransFormID].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << Road[i][0] << "  |" << endl;
+		cout << "---------------------------------------------" << endl;
 	}
 }
