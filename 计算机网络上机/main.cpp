@@ -13,6 +13,7 @@ int main()
 	cout << "3.删除路由器" << endl;
 	cout << "4.删除边" << endl;
 	cout << "5.输出路由表" << endl;
+	cout << "6.结束" << endl;
 	int choice = 0;
 	cin >> choice;
 	switch (choice)
@@ -39,8 +40,15 @@ int main()
 	}
 	case 5:
 	{
-
+		int id1 = 0;
+		cout << "请输入需要输出路由表的路由器的id" << endl;
+		cin >> id1;
+		net.Dijkstra(net);
 		break;
+	}
+	case 6:
+	{
+		return 0;
 	}
 	default:
 	{

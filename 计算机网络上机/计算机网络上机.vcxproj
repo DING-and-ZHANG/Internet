@@ -132,6 +132,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="网络拓扑.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -80,7 +80,7 @@ void Graph::ReadFile()
 	}
 	file.close();
 	//再将邻接矩阵中的内容写入各个结点中
-	SetNode();
+	//SetNode();
 }
 
 void Graph::AddPoint()
@@ -145,7 +145,7 @@ void Graph::AddPoint()
 		}
 	}
 	//再将各个路由器中的信息通过邻接矩阵存入内存
-	SetNode();
+	//SetNode();
 	WriteFile();
 }
 
@@ -183,7 +183,7 @@ void Graph::AddEdge()
 		if (judge == 'n' || judge == 'N')
 			break;
 	}
-	SetNode();
+	//SetNode();
 	WriteFile();
 }
 
@@ -191,14 +191,17 @@ void Graph::SetNode()
 {
 	int head = 0;
 	int tail = 0;
-	for (int i = 0; i < number; i++)
+	for (int i = 0; i < 30; i++)
 	{
-		hold[i].ID = i + 1;
-		for (int j = 0; j < number; j++)
+		for (int j = 0; j < 30; j++)
 		{
 			head = idToMatrix[i];
 			tail = idToMatrix[j];
-			hold[i].edge[j] = matrix[head][tail];
+			if (head >= 0 && tail >= 0)
+			{
+				hold[i].ID = i + 1;
+				hold[i].edge[j] = matrix[head][tail];
+			}
 		}
 	}
 }
@@ -237,7 +240,7 @@ void Graph::DeleteEdge()
 		if (judge == 'n' || judge == 'N')
 			break;
 	}
-	SetNode();
+	//SetNode();
 	WriteFile();
 }
 
@@ -294,6 +297,11 @@ void Graph::DeletePoint()
 		}
 
 	}
-	SetNode();
+	//SetNode();
 	WriteFile();
 }
+
+/*Node Graph::PutNode(int id)
+{
+	return hold[id - 1];
+}*/
