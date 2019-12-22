@@ -65,10 +65,10 @@ L1:
 		for (int i = 0; i < G.number; i++)
 		{
 			//点A到其它结点的距离小于MAX 且 小于当前最短距离（NowMinDis）且 未被访问 且 非自身
-			if (G.hold[TransFormID - 1].edge[i] < maxDistence && G.hold[TransFormID - 1].edge[i] < NowMinDis && Visited[i] == -1 && G.hold[TransFormID - 1].edge[i] != 0)
+			if (Dis[i] < maxDistence && Dis[i] < NowMinDis && Visited[i] == -1 && Dis[i] != 0)
 			{
 				//更改最短路径的距离
-				NowMinDis = G.hold[TransFormID - 1].edge[i];
+				NowMinDis = Dis[i];
 				//距离最短的结点
 				Node = i;
 			}
