@@ -127,10 +127,17 @@
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddEdge.cpp" />
+    <ClCompile Include="AddPoint.cpp" />
+    <ClCompile Include="DeleteEdge.cpp" />
+    <ClCompile Include="DeletePoint.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="ReadFile.cpp" />
+    <ClCompile Include="SetNode.cpp" />
+    <ClCompile Include="WriteFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="网络拓扑.txt" />

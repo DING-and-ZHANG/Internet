@@ -26,7 +26,7 @@ Graph::Graph()
 	}
 }
 
-//将内存中的邻接矩阵信息写入文件中
+/*//将内存中的邻接矩阵信息写入文件中
 void Graph::WriteFile()
 {
 	int head = 0;
@@ -322,7 +322,7 @@ void Graph::DeletePoint()
 	WriteFile();
 }
 
-/*Node Graph::PutNode(int id)
+Node Graph::PutNode(int id)
 {
 	return hold[id - 1];
 }*/
