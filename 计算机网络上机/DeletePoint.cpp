@@ -10,7 +10,7 @@ void Graph::DeletePoint()
 	{
 		int deleteNumber = 0;
 		int num = 0;
-		cout << "请输入需要删除的路由器编号,删除后该路由器编号之后的路由器编号将依次提前一位" << endl;
+		cout << "请输入需要删除的路由器编号" << endl;
 		cin >> num;
 		//开始调整矩阵(先直接调整下邻接矩阵)
 		//先将每一列大于num的依次上调一位
