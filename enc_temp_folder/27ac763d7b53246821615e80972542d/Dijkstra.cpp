@@ -19,7 +19,6 @@ int Find(int Node, int TransForm, int* Father)
 //Dijkstra算法
 void Graph::Dijkstra(Graph G)
 {
-	cout << "丁泽坤！" << endl;
 	int Node = 0;        //源点最近的点
 	int NextJump = 0;    //记录下一跳
 	int* Father = new int[G.number];   //父结点数组
