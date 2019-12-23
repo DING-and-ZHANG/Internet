@@ -6,6 +6,7 @@ using namespace std;
 #define maxDistence  0x0FFFFFFF
 void Graph::AddPoint()
 {
+	cout << "张健强" << endl;
 	cout << "开始添加路由器" << endl;
 	while (1)
 	{
