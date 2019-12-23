@@ -43,8 +43,7 @@ L1:
 	//假入该ID不存在内容
 	if (NewTransID <= -1)
 	{
-		cout << "该路由器不存在！请重新输入！" << endl;
-		goto L1;
+		cout << "该路由器不存在！" << endl;
 	}
 	else
 	{
