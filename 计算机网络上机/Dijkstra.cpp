@@ -28,6 +28,7 @@ void Graph::Dijkstra(Graph G)
 
 	int RouterID = 0;    //路由器ID
 	int TransFormID = 0; //转换ID
+	int NewTransID = 0;
 	cout << "请输入你想从哪个路由器(ID)开始：" << endl;
 L1:
 	cout << flush;
@@ -36,104 +37,107 @@ L1:
 	//TransFormID = G.idToMatrix[RouterID - 1];
 
 	//将路由器ID转换为正确的ID
+	NewTransID = G.idToMatrix[RouterID - 1];
 	TransFormID = RouterID;
 
 	//假入该ID不存在内容
-	if (TransFormID <= 0)
+	if (NewTransID <= -1)
 	{
 		cout << "该路由器不存在！请重新输入！" << endl;
 		goto L1;
 	}
-
-	//初始化
-	for (int i = 0; i < G.number; i++)
+	else
 	{
-		//A（源点）到其它结点的距离
-		Dis[i] = G.hold[TransFormID - 1].edge[i];
-		//所有结点均未访问（-1）
-		Visited[i] = -1;
-		//父结点初始化为源点
-		Father[i] = TransFormID - 1;
-	}
-
-	Visited[TransFormID - 1] = 1;          //表明A已访问
-	int Circulation = G.number - 1;        //循环次数
-	while (Circulation)
-	{
-		NowMinDis = maxDistence;           //源点最近距离
-		//寻找距离点A最近的结点
+		//初始化
 		for (int i = 0; i < G.number; i++)
 		{
-			//点A到其它结点的距离小于MAX 且 小于当前最短距离（NowMinDis）且 未被访问 且 非自身
-			if (Dis[i] < maxDistence && Dis[i] < NowMinDis && Visited[i] == -1 && Dis[i] != 0)
-			{
-				//更改最短路径的距离
-				NowMinDis = Dis[i];
-				//距离最短的结点
-				Node = i;
-			}
+			//A（源点）到其它结点的距离
+			Dis[i] = G.hold[TransFormID - 1].edge[i];
+			//所有结点均未访问（-1）
+			Visited[i] = -1;
+			//父结点初始化为源点
+			Father[i] = TransFormID - 1;
 		}
-		Visited[Node] = 1;           //表明Node已访问
 
-		/*
-		if (PreNode == -1)
+		Visited[TransFormID - 1] = 1;          //表明A已访问
+		int Circulation = G.number - 1;        //循环次数
+		while (Circulation)
 		{
-			goto L1;
-		}
-		else
-		{
-			//A->Node 大于 A->Pre->Node
-			if (Dis[Node] > Dis[PreNode] + G.matrix[PreNode][Node])
+			NowMinDis = maxDistence;           //源点最近距离
+			//寻找距离点A最近的结点
+			for (int i = 0; i < G.number; i++)
 			{
-				Dis[Node] = Dis[PreNode] + G.matrix[PreNode][Node];
-			}
-		}
-	L1:
-		PreNode = Node;
-		*/
-
-		for (int i = 0; i < G.number; i++)
-		{
-			//源点所得最近点可达的结点
-			if (G.hold[Node].edge[i] < maxDistence)
-			{
-				//A->i 大于  A->Node->i
-				if (Dis[i] > Dis[Node] + G.hold[Node].edge[i] && Visited[i] == -1 && G.hold[Node].edge[i] != 0)
+				//点A到其它结点的距离小于MAX 且 小于当前最短距离（NowMinDis）且 未被访问 且 非自身
+				if (Dis[i] < maxDistence && Dis[i] < NowMinDis && Visited[i] == -1 && Dis[i] != 0)
 				{
-					Father[i] = Node;
-					Dis[i] = Dis[Node] + G.hold[Node].edge[i];
+					//更改最短路径的距离
+					NowMinDis = Dis[i];
+					//距离最短的结点
+					Node = i;
 				}
 			}
-		}
-		Circulation--;
-	}
-	//给Next分配内存
-	G.hold[TransFormID - 1].nextJump = new int[G.number];
+			Visited[Node] = 1;           //表明Node已访问
 
-	//         路由器名称     目的网络         下一跳
-	cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-	cout << "|  RouterID  |  ObjectiveNet  |   NextJump  |" << endl;
-	cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-	//把下一跳存储并输出路由表
-	for (int i = 0; i < G.number; i++)
-	{
-		//如果目的网络与路由器相连
-		if (i == TransFormID - 1)
-		{
-			//得到路由器的下一跳并存储
-			NextJump = Find(i, TransFormID - 1, Father) + 1;
-			G.hold[TransFormID - 1].nextJump[i] = NextJump;
-			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
-			cout << "---------------------------------------------" << endl;
+			/*
+			if (PreNode == -1)
+			{
+				goto L1;
+			}
+			else
+			{
+				//A->Node 大于 A->Pre->Node
+				if (Dis[Node] > Dis[PreNode] + G.matrix[PreNode][Node])
+				{
+					Dis[Node] = Dis[PreNode] + G.matrix[PreNode][Node];
+				}
+			}
+		L1:
+			PreNode = Node;
+			*/
+
+			for (int i = 0; i < G.number; i++)
+			{
+				//源点所得最近点可达的结点
+				if (G.hold[Node].edge[i] < maxDistence)
+				{
+					//A->i 大于  A->Node->i
+					if (Dis[i] > Dis[Node] + G.hold[Node].edge[i] && Visited[i] == -1 && G.hold[Node].edge[i] != 0)
+					{
+						Father[i] = Node;
+						Dis[i] = Dis[Node] + G.hold[Node].edge[i];
+					}
+				}
+			}
+			Circulation--;
 		}
-		//如果目的网络与路由器不相连
-		if (i != TransFormID - 1)
+		//给Next分配内存
+		G.hold[TransFormID - 1].nextJump = new int[G.number];
+
+		//         路由器名称     目的网络         下一跳
+		cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+		cout << "|  RouterID  |  ObjectiveNet  |   NextJump  |" << endl;
+		cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+		//把下一跳存储并输出路由表
+		for (int i = 0; i < G.number; i++)
 		{
-			//得到路由器的下一跳并存储
-			NextJump = Find(i, TransFormID - 1, Father) + 1;
-			G.hold[TransFormID - 1].nextJump[i] = NextJump;
-			cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << NextJump << "  |" << endl;
-			cout << "---------------------------------------------" << endl;
+			//如果目的网络与路由器相连
+			if (i == TransFormID - 1)
+			{
+				//得到路由器的下一跳并存储
+				NextJump = Find(i, TransFormID - 1, Father) + 1;
+				G.hold[TransFormID - 1].nextJump[i] = NextJump;
+				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
+				cout << "---------------------------------------------" << endl;
+			}
+			//如果目的网络与路由器不相连
+			if (i != TransFormID - 1)
+			{
+				//得到路由器的下一跳并存储
+				NextJump = Find(i, TransFormID - 1, Father) + 1;
+				G.hold[TransFormID - 1].nextJump[i] = NextJump;
+				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << NextJump << "  |" << endl;
+				cout << "---------------------------------------------" << endl;
+			}
 		}
 	}
 }
