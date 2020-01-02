@@ -19,7 +19,6 @@ int Find(int Node, int TransForm, int* Father)
 //Dijkstra算法
 void Graph::Dijkstra(Graph G)
 {
-	cout << "丁泽坤！" << endl;
 	int Node = 0;        //源点最近的点
 	int NextJump = 0;    //记录下一跳
 	int* Father = new int[G.number];   //父结点数组
@@ -77,23 +76,6 @@ L1:
 				}
 			}
 			Visited[Node] = 1;           //表明Node已访问
-
-			/*
-			if (PreNode == -1)
-			{
-				goto L1;
-			}
-			else
-			{
-				//A->Node 大于 A->Pre->Node
-				if (Dis[Node] > Dis[PreNode] + G.matrix[PreNode][Node])
-				{
-					Dis[Node] = Dis[PreNode] + G.matrix[PreNode][Node];
-				}
-			}
-		L1:
-			PreNode = Node;
-			*/
 
 			for (int i = 0; i < G.number; i++)
 			{
