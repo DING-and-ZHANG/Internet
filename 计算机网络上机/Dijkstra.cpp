@@ -19,9 +19,10 @@ int Find(int Node, int TransForm, int* Father)
 //Dijkstra算法
 void Graph::Dijkstra(Graph G)
 {
-	cout << "丁泽坤！" << endl;
+
 	int Node = 0;        //源点最近的点
 	int NextJump = 0;    //记录下一跳
+	int TrueNextJump = 0;//记录实际下一跳
 	int* Father = new int[G.number];   //父结点数组
 	int NowMinDis = maxDistence;       //源点最近距离
 	int* Dis = new int[G.number];      //A到其它结点的最短距离
@@ -31,11 +32,8 @@ void Graph::Dijkstra(Graph G)
 	int TransFormID = 0; //转换ID
 	int NewTransID = 0;
 	cout << "请输入你想从哪个路由器(ID)开始：" << endl;
-L1:
 	cout << flush;
 	cin >> RouterID;
-	//将路由器ID转换为正确的ID
-	//TransFormID = G.idToMatrix[RouterID - 1];
 
 	//将路由器ID转换为正确的ID
 	NewTransID = G.idToMatrix[RouterID - 1];
@@ -113,6 +111,19 @@ L1:
 		//给Next分配内存
 		G.hold[TransFormID - 1].nextJump = new int[G.number];
 
+		/*
+		for (int i = 0; i < 30; i++)
+		{
+			cout << "I:" << i+1 << "  To:" << G.idToMatrix[i]+1 << endl;
+		}
+		cout << endl << endl;
+		for (int i = 0; i < G.number; i++)
+		{
+			cout << "I:" << i+1 << "  Father:" << Father[i]+1 << endl;
+		}
+		cout << endl << endl;
+		*/
+
 		//         路由器名称     目的网络         下一跳
 		cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
 		cout << "|  RouterID  |  ObjectiveNet  |   NextJump  |" << endl;
@@ -125,8 +136,9 @@ L1:
 			{
 				//得到路由器的下一跳并存储
 				NextJump = Find(i, TransFormID - 1, Father) + 1;
-				G.hold[TransFormID - 1].nextJump[i] = NextJump;
-				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
+				TrueNextJump = G.idToMatrix[NextJump];
+				G.hold[TransFormID - 1].nextJump[i] = TrueNextJump;
+				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << TrueNextJump << ".x.x.x  |" << endl;
 				cout << "---------------------------------------------" << endl;
 			}
 			//如果目的网络与路由器不相连
@@ -134,8 +146,16 @@ L1:
 			{
 				//得到路由器的下一跳并存储
 				NextJump = Find(i, TransFormID - 1, Father) + 1;
-				G.hold[TransFormID - 1].nextJump[i] = NextJump;
-				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << NextJump << "  |" << endl;
+				for (int j = 0; j < 30; j++)
+				{
+					if (NextJump == G.idToMatrix[j])
+					{
+						TrueNextJump = j;
+						break;
+					}
+				}
+				G.hold[TransFormID - 1].nextJump[i] = TrueNextJump;
+				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    路由器" << TrueNextJump << "  |" << endl;
 				cout << "---------------------------------------------" << endl;
 			}
 		}
