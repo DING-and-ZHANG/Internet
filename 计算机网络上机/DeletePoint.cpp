@@ -15,7 +15,7 @@ void Graph::DeletePoint()
 		//开始调整矩阵(先直接调整下邻接矩阵)
 		//先将每一列大于num的依次上调一位
 		deleteNumber = idToMatrix[num - 1];
-		if (matrix[num - 1][0] == -1)
+		if (deleteNumber == -1)
 		{
 			cout << "无该路由器，请输入正确的编号" << endl;
 		}

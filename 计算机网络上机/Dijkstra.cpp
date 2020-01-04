@@ -138,7 +138,7 @@ void Graph::Dijkstra(Graph G)
 				NextJump = Find(i, TransFormID - 1, Father) + 1;
 				TrueNextJump = G.idToMatrix[NextJump];
 				G.hold[TransFormID - 1].nextJump[i] = TrueNextJump;
-				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << TrueNextJump << ".x.x.x  |" << endl;
+				cout << "|  路由器" << G.hold[TransFormID - 1].ID << "   |    " << i + 1 << ".x.x.x" << "     |    " << NextJump << ".x.x.x  |" << endl;
 				cout << "---------------------------------------------" << endl;
 			}
 			//如果目的网络与路由器不相连
