@@ -45,6 +45,7 @@ void Graph::DeletePoint()
 					idToMatrix[i]--;
 			}
 			idToMatrix[num - 1] = -1;
+			hold[num - 1].ID = -1;
 			number--;
 			cout << "É¾³ýÍê³É" << endl;
 		}

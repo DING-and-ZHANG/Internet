@@ -22,6 +22,7 @@ Graph::Graph()
 	idToMatrix = new int [maxNumber];
 	for (int i = 0; i < maxNumber; i++)
 	{
+		hold[i].ID = -1;
 		idToMatrix[i] = -1;
 	}
 }
